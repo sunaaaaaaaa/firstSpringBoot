@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="fragments :: flg_head"></th:block>
+<style type="text/css">
+.tit{
+	display:block; 
+	width:150px;
+}
+.valid-msg{color:red;	font-size:0.5vw;}
+
+</style>
+
+</head>
+<body>
+	<h1>로그인</h1>
+	<span class='valid-msg' th:if="${param.error}" th:text="|아이디나 비번을 확인한세용..!(Security에서 로그인실패시 자동으로 /login?error가 뜨게됨)|"></span>
+	<hr>
+	<!-- csrf토큰(우리가발행한거)을 hidden input에 넣어서 보내주게함.이 토큰이 인증값임(피싱[짭]사이트 공격에 예방해줌) -->
+	<form th:action="@{/member/login}" method="post">
+		<span class='tit'>ID : </span>
+		<input type="text" name="userId" id="userId">
+		<span class='tit'>Password : </span>
+		<input type="password" name="password" id="password">
+		<!-- token -->
+		<input type="checkbox" id="rememberMe" name="remember-me" checked="checked"/>
+		<label for="rememberMe">로그인 유지</label>
+		<button>로그인</button>
+	</form>
+	<div class="social-login">
+			<button type="button" onclick="location.href='/oauth2/authorization/google'" style="background-color:red; color:white;">
+				Google Login
+			</button>
+		</div>
+	
+	
+</body>
+</html>

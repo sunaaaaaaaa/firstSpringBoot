@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="fragments :: flg_head"></th:block>
+</head>
+<body>
+<h1>마이페이지</h1>
+<table border="1" th:object="${session.authentication}">
+	<tr>
+		<th>아이디</th>
+		<td th:text="${#authentication.name}"></td>
+	</tr>
+	<tr>
+		<th>비밀번호</th> <!-- crendentials. 뒤에도 데이터있음 -->
+		<!-- 이렇게도가능 
+		<td th:text="${#authentication.principal.password}"></td>-->
+		<td th:text="${#authentication.credentials}"></td>
+	</tr>
+	<tr>
+		<th>휴대폰번호</th><!-- 나머지 애들은 princi로 해줌. MemberAccount클래스에서 미리만들어준 getter애들 가지고옴 -->
+		<td th:text="${#authentication.principal.tell}"></td>
+	</tr>
+	<tr>
+		<th>email</th>
+		<td th:text="${#authentication.principal.email}"></td>
+	</tr>
+</table>
+
+
+</body>
+</html>

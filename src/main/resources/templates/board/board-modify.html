@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="fragments :: flg_head"></th:block>
+<link rel="stylesheet" href="/css/board/board.css">
+</head>
+<body>
+<div class="content">
+	<h2 class="tit">*게시판</h2>
+	<div class="desc_board">
+		<form th:action="@{/board/modify}" method="post" enctype="multipart/form-data">
+			<div>
+				<div class="tit_board">
+					제목 : <input type="text" name="title" required="required" th:value="${board.title}"/><br>
+					파일 : <input type="file" name="fileList" id="contract_file" multiple/>
+				</div>
+				<div class='info file_info'>
+					<ol>
+						<li th:each="file : ${board.files}" 
+						th:object="${file}"
+						th:onclick="|removeFile(this,*{flIdx})|" >
+							<a>
+								[[*{originFileName}]]	<b>x</b>
+							</a>
+						</li>		
+					</ol>
+				</div>
+				<div class="content_board">
+					<textarea name="content" required="required" th:text="${board.content}"></textarea>
+				</div>
+				<div class="btn_section">
+					<button style="background-color:red; color:white; width:100%">전송</button>
+				</div>
+			</div>		
+			<input type="hidden" name="bdIdx" th:value="${board.bdIdx}"/>	
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+
+let removeFile = (e,flIdx) =>{ /* flIdx도 받아옴 */
+	e.style.display ='none'; /* 일단은 안보이게 */
+	let hidden = document.createElement('input'); /* hidden 인풋 만들어줌 */
+	hidden.type='hidden';
+	hidden.name='removeFlIdx';/* 이름 */
+	hidden.value=flIdx;
+	document.querySelector('form').append(hidden);/* form안에 넣어줌 */
+}
+
+
+</script>
+
+
+</body>
+</html>
